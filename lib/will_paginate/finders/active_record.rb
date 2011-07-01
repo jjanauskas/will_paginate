@@ -57,7 +57,7 @@ module WillPaginate::Finders
         query = sanitize_sql(sql.dup)
         original_query = query.dup
         # add limit, offset
-        query << " LIMIT #{pager.per_page} OFFSET #{pager.offset}"
+        query << " LIMIT #{pager.per_page + pager.extra_fetch} OFFSET #{pager.offset}"
         # perfom the find
         pager.replace find_by_sql(query)
         
@@ -78,7 +78,7 @@ module WillPaginate::Finders
 
     def wp_query(options, pager, args, &block) #:nodoc:
       finder = (options.delete(:finder) || 'find').to_s
-      find_options = options.except(:count).update(:offset => pager.offset, :limit => pager.per_page) 
+      find_options = options.except(:count).update(:offset => pager.offset, :limit => pager.per_page + pager.extra_fetch) 
 
       if finder == 'find'
         if Array === args.first and !pager.total_entries

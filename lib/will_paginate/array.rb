@@ -26,7 +26,8 @@ class Array
     
     WillPaginate::Collection.create options[:page] || 1,
                                     options[:per_page] || 30,
-                                    options[:total_entries] || self.length do |pager|
+                                    options[:total_entries] || self.length,
+                                    options[:extra_fetch] || 0 do |pager|
       pager.replace self[pager.offset, pager.per_page].to_a
     end
   end

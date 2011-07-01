@@ -103,8 +103,9 @@ module WillPaginate
           page     = options[:page] || 1
           per_page = options[:per_page] || self.per_page
           total    = options[:total_entries]
+          extra_fetch = options[:extra_fetch] || 0
           
-          return [page, per_page, total]
+          return [page, per_page, total, extra_fetch]
         end
         
     end

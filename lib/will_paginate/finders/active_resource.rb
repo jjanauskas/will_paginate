@@ -20,6 +20,7 @@ module WillPaginate::Finders
       params = (options[:params] ||= {})
       params[:page] = pager.current_page
       params[:per_page] = pager.per_page
+      params[:extra_fetch] = pager.extra_fetch
       
       pager.replace find_every(options, &block)
     end
@@ -33,7 +34,7 @@ module WillPaginate::Finders
       if collection.is_a?(Hash) && collection["type"] == "collection"
         collectables = collection.values.find{ |c| c.is_a?(Hash) || c.is_a?(Array) }
         collectables = [collectables].compact unless collectables.kind_of?(Array)
-        instantiated_collection = WillPaginate::Collection.create(collection["current_page"], collection["per_page"], collection["total_entries"]) do |pager|
+        instantiated_collection = WillPaginate::Collection.create(collection["current_page"], collection["per_page"], collection["total_entries"], collection["extar_fetch"]) do |pager|
           pager.replace instantiate_collection_without_collection(collectables, prefix_options)
         end
       else

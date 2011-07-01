@@ -8,7 +8,7 @@ module WillPaginate::Finders
   protected
     
     def wp_query(options, pager, args, &block) #:nodoc
-      find_options = options.except(:count).update(:offset => pager.offset, :limit => pager.per_page) 
+      find_options = options.except(:count).update(:offset => pager.offset, :limit => pager.per_page + pager.extra_fetch) 
 
       pager.replace all(find_options, &block)
       
