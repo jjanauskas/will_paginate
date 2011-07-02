@@ -53,6 +53,7 @@ module WillPaginate::Finders
     # application.
     # 
     def paginate_by_sql(sql, options)
+      puts "xx#{options[:extra_fetch]}"
       WillPaginate::Collection.create(*wp_parse_options(options)) do |pager|
         query = sanitize_sql(sql.dup)
         original_query = query.dup
@@ -77,8 +78,9 @@ module WillPaginate::Finders
   protected
 
     def wp_query(options, pager, args, &block) #:nodoc:
+      puts "ffffff #{options}"
       finder = (options.delete(:finder) || 'find').to_s
-      find_options = options.except(:count).except(:fetch_extra).update(:offset => pager.offset, :limit => pager.per_page + pager.extra_fetch) 
+      find_options = options.except(:count).except(:extra_fetch).update(:offset => pager.offset, :limit => pager.per_page + pager.extra_fetch) 
 
       if finder == 'find'
         if Array === args.first and !pager.total_entries

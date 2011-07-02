@@ -57,10 +57,10 @@ module WillPaginate
       # and +count+ calls.
       def paginate(*args, &block)
         options = args.pop
-        page, per_page, total_entries = wp_parse_options(options)
+        page, per_page, total_entries, extra_fetch = wp_parse_options(options)
 
-        WillPaginate::Collection.create(page, per_page, total_entries) do |pager|
-          query_options = options.except :page, :per_page, :total_entries
+        WillPaginate::Collection.create(page, per_page, total_entries, extra_fetch) do |pager|
+          query_options = options.except :page, :per_page, :total_entries, :extra_fetch
           wp_query(query_options, pager, args, &block)
         end
       end
