@@ -4,7 +4,7 @@ This fork is developed by Justas Janauskas (gmail to jjanauskas). It includes on
 
 For example:
 
-Post.paginate :page => 2, :per_page => 20, :extra_fetch => 3, :order => 'created_at DESC'
+  Post.paginate :page => 2, :per_page => 20, :extra_fetch => 3, :order => 'created_at DESC'
 
 This will return 23 records instead of 20.
 
