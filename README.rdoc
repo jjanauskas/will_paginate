@@ -1,3 +1,15 @@
+= About this fork
+
+This fork is developed by Justas Janauskas (gmail to jjanauskas). It includes one extra paging feature :extra_fetch, which allows to fetch few more records for desired page.
+
+For example:
+
+Post.paginate :page => 2, :per_page => 20, :extra_fetch => 3, :order => 'created_at DESC'
+
+This will return 23 records instead of 20.
+
+This was needed for manodrabuziai.lt, kleiderkleiser.de and votocvohoz.cz projects. Due to our internal data structures, we have to reprocess retrieved collection from ActiveRecord and sometimes remove few items. We use :extra_fetch feature to retrieve slightly more records per each page, then remove unnecessary and still have required :per_page number records in our pages.
+
 = The will_paginate Ruby library
 
 Pagination is just limiting the number of records loaded and displayed. Why should you let it get in
